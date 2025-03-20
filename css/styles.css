@@ -1,0 +1,259 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --background-color: #f5f6fa;
+    --border-color: #dcdde1;
+    --text-color: #2c3e50;
+    --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+}
+
+h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.calculator-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+
+.input-section, .output-section {
+    padding: 1rem;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: var(--background-color);
+    border-radius: 8px;
+}
+
+.input-field {
+    margin-bottom: 1rem;
+}
+
+.size-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+input, select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+}
+
+.result-group {
+    background: var(--background-color);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.result-group p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.breakdown {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Selected Add-ons styles */
+.selected-addons {
+    margin-top: 1rem;
+}
+
+.selected-addon {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--border-color);
+}
+
+.selected-addon .addon-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.selected-addon .addon-name {
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.selected-addon .addon-type {
+    font-size: 0.8rem;
+    color: #666;
+    background: var(--background-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+}
+
+.selected-addon .remove-addon {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    padding: 0.25rem;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.selected-addon .remove-addon:hover {
+    color: #c0392b;
+}
+
+/* Addon styles */
+.addon-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background: white;
+    border-radius: 4px;
+}
+
+.addon-item input[type="checkbox"] {
+    width: auto;
+}
+
+.addon-item input[type="number"] {
+    width: 100px;
+}
+
+/* Unit selector styles */
+.unit-selector {
+    margin-bottom: 1rem;
+}
+
+.unit-selector label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.unit-selector select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: white;
+}
+
+.unit-selector select:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+}
+
+/* Add-on controls styles */
+.addon-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.addon-control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.addon-control-group label {
+    margin-bottom: 0;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    color: var(--primary-color);
+}
+
+.addon-control-group input[type="number"] {
+    width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .calculator-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .size-inputs {
+        grid-template-columns: 1fr;
+    }
+
+    body {
+        padding: 10px;
+    }
+
+    .addon-controls {
+        grid-template-columns: 1fr;
+    }
+} 
