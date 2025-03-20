@@ -3,7 +3,7 @@ class UI {
         this.calculator = new Calculator();
         this.initializeElements();
         this.setupEventListeners();
-        this.populateMaterialDropdown();
+        this.setupMaterialSelector();
         this.populateAddonDropdown();
         
         // Initialize calculator state with UI values
@@ -15,7 +15,7 @@ class UI {
         this.lengthInput = document.getElementById('length');
         this.widthInput = document.getElementById('width');
         this.unitSelect = document.getElementById('unit');
-        this.materialSelect = document.getElementById('material');
+        this.materialContainer = document.querySelector('.custom-select');
         this.rate1Input = document.getElementById('rate1');
         this.rate2Input = document.getElementById('rate2');
         this.addonSelect = document.getElementById('addon-select');
@@ -27,6 +27,18 @@ class UI {
         this.total2Output = document.getElementById('total2');
         this.breakdown1Output = document.getElementById('breakdown1');
         this.breakdown2Output = document.getElementById('breakdown2');
+    }
+
+    setupMaterialSelector() {
+        this.materialSelector = new MaterialSelector(
+            this.materialContainer,
+            CONFIG.materials,
+            (material) => {
+                this.calculator.setMaterial(material.id);
+                this.rate1Input.value = this.calculator.rate1;
+                this.updateCalculations();
+            }
+        );
     }
 
     initializeCalculatorState() {
@@ -42,8 +54,9 @@ class UI {
         }
         
         // Set initial material if selected
-        if (this.materialSelect.value) {
-            this.calculator.setMaterial(this.materialSelect.value);
+        const selectedMaterial = this.materialSelector.getSelectedMaterial();
+        if (selectedMaterial) {
+            this.calculator.setMaterial(selectedMaterial.id);
             this.rate1Input.value = this.calculator.rate1;
         }
         
@@ -77,13 +90,6 @@ class UI {
             this.updateCalculations();
         });
 
-        // Material selection
-        this.materialSelect.addEventListener('change', () => {
-            this.calculator.setMaterial(this.materialSelect.value);
-            this.rate1Input.value = this.calculator.rate1;
-            this.updateCalculations();
-        });
-
         // Rate inputs
         this.rate1Input.addEventListener('input', () => {
             this.calculator.setRate1(this.rate1Input.value);
@@ -110,15 +116,6 @@ class UI {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
         }).format(number);
-    }
-
-    populateMaterialDropdown() {
-        CONFIG.materials.forEach(material => {
-            const option = document.createElement('option');
-            option.value = material.id;
-            option.textContent = material.name;
-            this.materialSelect.appendChild(option);
-        });
     }
 
     populateAddonDropdown() {

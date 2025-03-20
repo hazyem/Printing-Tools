@@ -59,6 +59,7 @@ h3 {
 }
 
 .input-group {
+    position: relative;
     margin-bottom: 1.5rem;
     padding: 1rem;
     background: var(--background-color);
@@ -66,6 +67,7 @@ h3 {
 }
 
 .input-field {
+    position: relative;
     margin-bottom: 1rem;
 }
 
@@ -255,5 +257,84 @@ input:focus, select:focus {
 
     .addon-controls {
         grid-template-columns: 1fr;
+    }
+
+    input[type="number"] {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    input[type="number"]:focus {
+        font-size: 16px; /* Maintains font size when focused */
+    }
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Custom Select Styles */
+.custom-select {
+    position: relative;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: white;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+}
+
+.options-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    z-index: 9999;
+    display: none;
+    box-shadow: var(--shadow);
+}
+
+.options-container.show {
+    display: block;
+}
+
+.material-option {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.material-option:hover {
+    background-color: var(--background-color);
+}
+
+.material-option.selected {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+    .options-container {
+        max-height: 150px;
     }
 } 
