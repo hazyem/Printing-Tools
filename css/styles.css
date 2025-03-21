@@ -102,12 +102,18 @@ input:focus, select:focus {
     padding: 1rem;
     border-radius: 8px;
     margin-bottom: 1rem;
+    text-align: center;
 }
 
-.result-group p {
-    font-size: 1.2rem;
-    font-weight: 600;
+.result-group h3 {
+    margin-bottom: 0.5rem;
     color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+#total-sqft {
+    white-space: nowrap; /* Prevent breaking calculation across lines */
+    letter-spacing: 0.05em; /* Improve readability */
 }
 
 .breakdown {
@@ -238,7 +244,35 @@ input:focus, select:focus {
 }
 
 .addon-control-group input[type="number"] {
+    -moz-appearance: textfield;
+    -webkit-appearance: none;
+    appearance: none;
     width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 16px; /* Prevents zoom on iOS */
+    background-color: white;
+}
+
+.addon-control-group input[type="number"]:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+}
+
+/* Remove spinner buttons */
+.addon-control-group input[type="number"]::-webkit-outer-spin-button,
+.addon-control-group input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Mobile-specific adjustments for numeric inputs */
+@media (max-width: 768px) {
+    .addon-control-group input[type="number"] {
+        font-size: 16px; /* Maintains font size on mobile */
+        padding: 0.75rem; /* Larger touch target */
+    }
 }
 
 /* Responsive Design */
@@ -336,5 +370,82 @@ input[type="number"]::-webkit-inner-spin-button {
 @media (max-width: 768px) {
     .options-container {
         max-height: 150px;
+    }
+}
+
+/* Dimension calculation styles */
+.dimension-calculation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.dimension-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+}
+
+.dimension-group span {
+    font-weight: 500;
+    font-size: 1.4rem;
+    height: 2rem; /* Fixed height for alignment */
+    display: flex;
+    align-items: center;
+}
+
+.dimension-group small {
+    font-size: 0.75rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.operator {
+    font-weight: 500;
+    color: var(--primary-color);
+    padding: 0 0.5rem;
+    font-size: 1.4rem;
+    height: 2rem; /* Match height with numbers */
+    display: flex;
+    align-items: center;
+}
+
+.total-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 120px;
+}
+
+.total-area span {
+    font-weight: 500;
+    font-size: 1.4rem;
+    height: 2rem; /* Match height with other numbers */
+    display: flex;
+    align-items: center;
+}
+
+/* Mobile adjustments for dimension calculation */
+@media (max-width: 768px) {
+    .dimension-calculation {
+        font-size: 1rem;
+        gap: 0.5rem;
+    }
+
+    .dimension-group {
+        min-width: 60px;
+    }
+
+    .dimension-group span,
+    .operator,
+    .total-area span {
+        font-size: 1.2rem;
+        height: 1.8rem; /* Slightly smaller height for mobile */
     }
 } 

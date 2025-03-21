@@ -13,7 +13,7 @@
         <div class="calculator-grid">
             <!-- Column 1: User Input -->
             <div class="input-section">
-                <h2>Input Details</h2>
+                <h2>Job Details</h2>
                 
                 <!-- Size Input -->
                 <div class="input-group">
@@ -112,7 +112,21 @@
                 
                 <div class="result-group">
                     <h3>Total Area</h3>
-                    <p><span id="total-sqft">0</span> sq ft</p>
+                    <div class="dimension-calculation">
+                        <div class="dimension-group">
+                            <span id="total-length"></span>
+                            <small>Length</small>
+                        </div>
+                        <span class="operator">×</span>
+                        <div class="dimension-group">
+                            <span id="total-width"></span>
+                            <small>Width</small>
+                        </div>
+                        <span class="operator">=</span>
+                        <div class="total-area">
+                            <span id="total-sqft"></span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="result-group">

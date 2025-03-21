@@ -22,6 +22,8 @@ class UI {
         this.selectedAddonsContainer = document.getElementById('selected-addons');
 
         // Output elements
+        this.totalLengthOutput = document.getElementById('total-length');
+        this.totalWidthOutput = document.getElementById('total-width');
         this.totalSqFtOutput = document.getElementById('total-sqft');
         this.total1Output = document.getElementById('total1');
         this.total2Output = document.getElementById('total2');
@@ -142,6 +144,27 @@ class UI {
         this.addonSelect.appendChild(perPieceOptgroup);
     }
 
+    createNumericInput(id, value, min, step, onChange) {
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.id = id;
+        input.value = value;
+        input.min = min;
+        input.step = step;
+        input.inputMode = 'decimal';
+        input.pattern = '[0-9]*\\.?[0-9]*';
+        
+        // Prevent non-numeric input
+        input.addEventListener('keypress', (event) => {
+            return (event.charCode >= 48 && event.charCode <= 57) || event.charCode === 46;
+        });
+        
+        // Add change listener
+        input.addEventListener('input', onChange);
+        
+        return input;
+    }
+
     addAddon(type, addonId) {
         const addonList = CONFIG.addons[type];
         const addon = addonList.find(a => a.id === addonId);
@@ -178,16 +201,16 @@ class UI {
             rateLabel.textContent = 'Rate (PHP/sq ft):';
             rateLabel.htmlFor = `rate-${addonId}`;
 
-            const rateInput = document.createElement('input');
-            rateInput.type = 'number';
-            rateInput.id = `rate-${addonId}`;
-            rateInput.value = addon.rate;
-            rateInput.min = '0';
-            rateInput.step = '0.01';
-            rateInput.addEventListener('input', () => {
-                this.calculator.updateAddonRate(type, addonId, rateInput.value);
-                this.updateCalculations();
-            });
+            const rateInput = this.createNumericInput(
+                `rate-${addonId}`,
+                addon.rate,
+                '0',
+                '0.01',
+                () => {
+                    this.calculator.updateAddonRate(type, addonId, rateInput.value);
+                    this.updateCalculations();
+                }
+            );
 
             rateGroup.appendChild(rateLabel);
             rateGroup.appendChild(rateInput);
@@ -201,16 +224,16 @@ class UI {
             rateLabel.textContent = 'Price per piece (PHP):';
             rateLabel.htmlFor = `rate-${addonId}`;
 
-            const rateInput = document.createElement('input');
-            rateInput.type = 'number';
-            rateInput.id = `rate-${addonId}`;
-            rateInput.value = addon.rate;
-            rateInput.min = '0';
-            rateInput.step = '0.01';
-            rateInput.addEventListener('input', () => {
-                this.calculator.updateAddonRate(type, addonId, rateInput.value);
-                this.updateCalculations();
-            });
+            const rateInput = this.createNumericInput(
+                `rate-${addonId}`,
+                addon.rate,
+                '0',
+                '0.01',
+                () => {
+                    this.calculator.updateAddonRate(type, addonId, rateInput.value);
+                    this.updateCalculations();
+                }
+            );
 
             const qtyGroup = document.createElement('div');
             qtyGroup.className = 'addon-control-group';
@@ -219,16 +242,16 @@ class UI {
             qtyLabel.textContent = 'Quantity:';
             qtyLabel.htmlFor = `qty-${addonId}`;
 
-            const qtyInput = document.createElement('input');
-            qtyInput.type = 'number';
-            qtyInput.id = `qty-${addonId}`;
-            qtyInput.value = 1;
-            qtyInput.min = '1';
-            qtyInput.step = '1';
-            qtyInput.addEventListener('input', () => {
-                this.calculator.updateAddonQuantity(type, addonId, qtyInput.value);
-                this.updateCalculations();
-            });
+            const qtyInput = this.createNumericInput(
+                `qty-${addonId}`,
+                1,
+                '1',
+                '1',
+                () => {
+                    this.calculator.updateAddonQuantity(type, addonId, qtyInput.value);
+                    this.updateCalculations();
+                }
+            );
 
             rateGroup.appendChild(rateLabel);
             rateGroup.appendChild(rateInput);
@@ -253,15 +276,23 @@ class UI {
         addonElement.appendChild(removeButton);
 
         this.selectedAddonsContainer.appendChild(addonElement);
-        this.calculator.toggleAddon(type, addonId, true, addon.rate);
+        this.calculator.toggleAddon(type, addonId, true);
         this.updateCalculations();
     }
 
     updateCalculations() {
         const results = this.calculator.calculate();
+        const currentUnit = this.calculator.unit;
 
-        // Update total area with current unit
-        this.totalSqFtOutput.textContent = this.calculator.formatDimension(results.totalSquareFeet);
+        // Format dimensions without units
+        const length = this.formatNumber(this.calculator.length);
+        const width = this.formatNumber(this.calculator.width);
+        const totalArea = this.formatNumber(results.totalSquareFeet);
+
+        // Update dimension displays
+        this.totalLengthOutput.textContent = length;
+        this.totalWidthOutput.textContent = width;
+        this.totalSqFtOutput.innerHTML = `${totalArea}<br><small>sq/${currentUnit}</small>`;
 
         // Update totals
         this.total1Output.textContent = this.calculator.formatNumber(results.total1);
