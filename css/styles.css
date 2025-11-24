@@ -19,17 +19,20 @@ body {
     color: var(--text-color);
     background-color: var(--background-color);
     padding: 20px;
+    min-height: 100vh;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
+    width: 100%;
 }
 
 h1 {
     text-align: center;
     color: var(--primary-color);
     margin-bottom: 2rem;
+    width: 100%;
 }
 
 h2 {
@@ -283,14 +286,22 @@ input:focus, select:focus {
 
     .container {
         max-width: 100%;
-        padding: 0 10px;
+        width: 100%;
+        padding: 0;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .calculator-grid {
         grid-template-columns: 1fr;
         padding: 1rem;
-        margin: 0;
+        margin: 0 auto;
         gap: 1rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .input-section, 
